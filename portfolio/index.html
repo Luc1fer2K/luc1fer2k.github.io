@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Prikshit Sehrawat | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Optional: Google Font (can remove if you want 100% offline) -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-alt: #070b22;
+      --accent: #7c3aed;
+      --accent-soft: rgba(124, 58, 237, 0.2);
+      --accent-strong: rgba(124, 58, 237, 0.5);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.25);
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --shadow-soft: 0 30px 80px rgba(15, 23, 42, 0.9);
+      --radius-xl: 24px;
+      --radius-full: 999px;
+      --nav-height: 72px;
+      --transition-fast: 180ms ease-out;
+      --transition-med: 260ms ease-out;
+      --glass-blur: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--nav-height);
+    }
+
+    body {
+      font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 48%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.12;
+        mix-blend-mode: soft-light;
+        background-image:
+            radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.15) 1px, transparent 0);
+        background-size: 6px 6px;
+        z-index: -1;
+        }
+
+    /* Fancy background orbs */
+    .bg-orb {
+      position: fixed;
+      inset: auto;
+      width: 460px;
+      height: 460px;
+      border-radius: 999px;
+      filter: blur(90px);
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: -1;
+      mix-blend-mode: screen;
+    }
+    .bg-orb--purple {
+      background: radial-gradient(circle, #7c3aed, transparent 60%);
+      top: -140px;
+      right: -140px;
+    }
+    .bg-orb--cyan {
+      background: radial-gradient(circle, #22d3ee, transparent 60%);
+      bottom: -160px;
+      left: -40px;
+    }
+
+    /* Layout */
+    .shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.6rem 4rem;
+    }
+
+    /* Glassy top nav */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.7), transparent);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.6rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: radial-gradient(circle at 20% 0, rgba(148, 163, 184, 0.3), rgba(15, 23, 42, 0.95));
+      box-shadow: 0 10px 35px rgba(15, 23, 42, 0.8);
+    }
+
+    .nav-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-title span:first-child {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .nav-title span:last-child {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      position: relative;
+      padding: 0.2rem 0;
+      transition: color var(--transition-fast);
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #6366f1, #a855f7, #22d3ee);
+      transition: width var(--transition-med);
+    }
+
+    .nav-link:hover {
+      color: var(--text-main);
+    }
+
+    .nav-link:hover::after,
+    .nav-link--active::after {
+      width: 100%;
+    }
+
+    /* Mobile menu */
+    .nav-toggle {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.8);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .nav-toggle span,
+    .nav-toggle span::before,
+    .nav-toggle span::after {
+      display: block;
+      width: 16px;
+      height: 2px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      position: relative;
+      transition: all var(--transition-med);
+    }
+
+    .nav-toggle span::before,
+    .nav-toggle span::after {
+      content: "";
+      position: absolute;
+      left: 0;
+    }
+
+    .nav-toggle span::before {
+      top: -5px;
+    }
+
+    .nav-toggle span::after {
+      top: 5px;
+    }
+
+    .nav-toggle--open span {
+      background: transparent;
+    }
+
+    .nav-toggle--open span::before {
+      transform: translateY(5px) rotate(45deg);
+    }
+
+    .nav-toggle--open span::after {
+      transform: translateY(-5px) rotate(-45deg);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        inset: var(--nav-height) 0 auto;
+        background: rgba(15, 23, 42, 0.98);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem 1.6rem 1.2rem;
+        gap: 0.75rem;
+        transform: translateY(-120%);
+        opacity: 0;
+        pointer-events: none;
+        transition: all var(--transition-med);
+      }
+
+      .nav-links--open {
+        transform: translateY(0%);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: calc(100vh - var(--nav-height));
+      display: flex;
+      align-items: center;
+      padding-top: 1.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.25fr);
+      gap: 2.6rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hero-intro {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.2rem 0.75rem 0.22rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: radial-gradient(circle at 0 0, rgba(148, 163, 184, 0.25), rgba(15, 23, 42, 0.98));
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+      width: fit-content;
+    }
+
+    .hero-tag-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 15%, #a5b4fc, #6366f1);
+      box-shadow: 0 0 0 6px rgba(79, 70, 229, 0.35);
+    }
+
+    .hero-tag span {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #e5e7eb;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+    }
+
+    .hero-title span {
+      background: linear-gradient(120deg, #a855f7, #22d3ee, #4f46e5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      max-width: 30rem;
+    }
+
+    .hero-highlight {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    /* Hero avatar */
+    .hero-avatar-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.7rem;
+    margin-bottom: 0.7rem;
+    }
+
+    .hero-avatar-ring {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    padding: 2px;
+    background: conic-gradient(
+        from 180deg,
+        #6366f1,
+        #a855f7,
+        #22d3ee,
+        #6366f1
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
+    }
+
+    .hero-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 20%, #e5e7eb, #111827);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: #0f172a;
+    }
+
+    /* If you ever want to use a real image, just place an <img> with this class */
+    .hero-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    object-fit: cover;
+    }
+
+    .hero-avatar-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    }
+
+    .hero-avatar-text-main {
+    font-size: 0.78rem;
+    font-weight: 600;
+    }
+
+    .hero-avatar-text-sub {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    }
+
+
+    .badge {
+      padding: 0.18rem 0.6rem 0.22rem;
+      border-radius: var(--radius-full);
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: #e5e7eb;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 64, 175, 0.9));
+    }
+
+    .badge,
+    .pill,
+    .skills-tag,
+    .project-tag,
+    .social-link {
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.7);
+    }
+
+    .badge {
+    border: 1px solid rgba(129, 140, 248, 0.9);
+    }
+
+    .skills-tag,
+    .project-tag {
+    background: radial-gradient(circle at 0 0, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 1));
+    }
+
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 0.6rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all var(--transition-med);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at 0 0, #a855f7, #4f46e5);
+      color: #f9fafb;
+      box-shadow: 0 18px 55px rgba(79, 70, 229, 0.75);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) translateZ(0);
+      box-shadow: 0 26px 60px rgba(79, 70, 229, 0.75);
+      filter: brightness(1.05);
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text-muted);
+      border-color: rgba(148, 163, 184, 0.6);
+    }
+
+    .btn-ghost:hover {
+      color: #f9fafb;
+      border-color: rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.6rem;
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+    }
+
+    .hero-meta-label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 600;
+      font-size: 0.7rem;
+      color: #6b7280;
+    }
+
+    .hero-meta-value {
+      font-weight: 500;
+      color: #e5e7eb;
+    }
+
+    /* Hero visual card */
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      padding: 1.2rem 1.2rem 1.1rem;
+      background: radial-gradient(circle at 0 0, rgba(148, 163, 184, 0.75), rgba(15, 23, 42, 0.95));
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .hero-card-inner {
+      border-radius: calc(var(--radius-xl) - 6px);
+      padding: 1rem;
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.94));
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 540px) {
+      .hero-card-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hero-monitor {
+      border-radius: 18px;
+      background: radial-gradient(circle at 10% 0, rgba(30, 64, 175, 0.6), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .monitor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .monitor-dots {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .monitor-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(248, 250, 252, 0.9);
+      opacity: 0.75;
+    }
+
+    .monitor-body {
+      position: relative;
+      border-radius: 12px;
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.3), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 0.6rem 0.75rem;
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.7rem;
+      color: #e5e7eb;
+      max-height: 175px;
+      overflow: hidden;
+    }
+
+    .code-line {
+      opacity: 0.92;
+      white-space: nowrap;
+    }
+
+    .code-line span {
+      display: inline-block;
+    }
+
+    .code-keyword {
+      color: #a5b4fc;
+    }
+
+    .code-type {
+      color: #facc15;
+    }
+
+    .code-string {
+      color: #f97316;
+    }
+
+    .code-comment {
+      color: #6b7280;
+    }
+
+    .code-meta {
+      color: #22c55e;
+    }
+
+    /* subtle code animation */
+    .monitor-body {
+      animation: codeGlow 4.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes codeGlow {
+      from {
+        box-shadow: 0 0 0 rgba(56, 189, 248, 0.15);
+      }
+      to {
+        box-shadow: 0 0 35px rgba(56, 189, 248, 0.4);
+      }
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+    }
+
+    .stat-pill {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.45rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: radial-gradient(circle at 0 0, rgba(55, 65, 81, 0.65), rgba(15, 23, 42, 1));
+    }
+
+    .stat-pill span:first-child {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.68rem;
+      color: #9ca3af;
+    }
+
+    .stat-pill span:last-child {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.15rem;
+    }
+
+    .tech-tag {
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.55);
+      font-size: 0.68rem;
+      color: #cbd5f5;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Section base styles */
+    section {
+      padding: 3.4rem 0 0;
+    }
+
+    .section-label {
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: #9ca3af;
+      margin-bottom: 0.3rem;
+    }
+
+    .section-heading {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.4rem;
+    }
+
+    .section-heading span {
+      background: linear-gradient(120deg, #a855f7, #22d3ee);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr);
+      gap: 1.8rem;
+    }
+
+    @media (max-width: 960px) {
+      .section-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* About */
+    .card {
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.98));
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 1.5rem 1.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.25), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s ease-out;
+      pointer-events: none;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .prose {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .prose p + p {
+      margin-top: 0.7rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 1rem;
+    }
+
+    .pill {
+      padding: 0.18rem 0.6rem 0.22rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      font-size: 0.75rem;
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+
+    .skills-card {
+      border-radius: 18px;
+      background: radial-gradient(circle at 0 0, rgba(55, 48, 163, 0.7), rgba(15, 23, 42, 0.96));
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 1rem;
+    }
+
+    .skills-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .skills-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+    }
+
+    .skills-tag {
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+    }
+
+    /* Experience timeline */
+    .timeline {
+      border-left: 1px solid rgba(148, 163, 184, 0.5);
+      padding-left: 1.3rem;
+      margin-top: 0.4rem;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0.75rem 0 0.75rem;
+    }
+
+    .timeline-bullet {
+      position: absolute;
+      left: -1.55rem;
+      top: 0.95rem;
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #a855f7, #22d3ee);
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.45);
+    }
+
+    .timeline-role {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .timeline-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-body {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .timeline-body ul {
+      margin-left: 1rem;
+      margin-top: 0.25rem;
+      list-style: disc;
+    }
+
+    /* Projects & Titles grid/cards */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .project-card {
+      border-radius: 18px;
+      background: radial-gradient(circle at 0 0, rgba(30, 64, 175, 0.7), rgba(15, 23, 42, 0.96));
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .project-title {
+      font-size: 0.96rem;
+      font-weight: 600;
+    }
+
+    .project-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .project-body {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .project-footer {
+      margin-top: 0.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+    }
+
+    .project-tag {
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr);
+      gap: 1.8rem;
+    }
+
+    @media (max-width: 960px) {
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .contact-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+    }
+
+    .contact-row-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .contact-row-value a {
+      color: #e5e7eb;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.6);
+      padding-bottom: 1px;
+    }
+
+    .contact-row-value a:hover {
+      color: #a5b4fc;
+      border-bottom-style: solid;
+    }
+
+    .social-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.2rem;
+    }
+
+    .social-link {
+      font-size: 0.8rem;
+      text-decoration: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.9);
+      transition: all var(--transition-med);
+    }
+
+    .social-link:hover {
+      color: #e5e7eb;
+      border-color: rgba(148, 163, 184, 0.95);
+      background: rgba(15, 23, 42, 1);
+    }
+
+    .contact-card {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at 0 0, rgba(22, 163, 74, 0.5), rgba(15, 23, 42, 0.98));
+      border: 1px solid rgba(52, 211, 153, 0.55);
+      padding: 1.3rem 1.4rem;
+      box-shadow: 0 18px 60px rgba(22, 163, 74, 0.65);
+      font-size: 0.9rem;
+    }
+
+    .contact-card h3 {
+      font-size: 1.02rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .contact-card p {
+      color: #dcfce7;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 3.5rem;
+      padding: 1.5rem 0 0.5rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    /* Scroll reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 420ms ease-out, transform 420ms ease-out;
+    }
+
+    .reveal--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Shared hover depth for all cards */
+    .card,
+    .skills-card,
+    .project-card,
+    .contact-card,
+    .hero-card {
+    backdrop-filter: blur(var(--glass-blur));
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.98));
+    transition: transform 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out, background 220ms ease-out;
+    }
+
+    .project-card {
+    background: radial-gradient(circle at 0 0, rgba(30, 64, 175, 0.6), rgba(15, 23, 42, 0.96));
+    }
+
+    .card:hover,
+    .skills-card:hover,
+    .project-card:hover,
+    .contact-card:hover,
+    .hero-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 26px 70px rgba(15, 23, 42, 0.95);
+    border-color: rgba(129, 140, 248, 0.9);
+    background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.25), rgba(15, 23, 42, 0.98));
+    }
+
+    section {
+    position: relative;
+    padding: 3.4rem 0 0;
+    }
+
+    section::before {
+    content: "";
+    position: absolute;
+    top: 0.2rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+    opacity: 0.35;
+    background: radial-gradient(circle at 0 50%, rgba(129, 140, 248, 0.6), transparent 55%),
+                radial-gradient(circle at 100% 50%, rgba(56, 189, 248, 0.5), transparent 55%);
+    pointer-events: none;
+    }
+
+    /* Featured title banner */
+    .featured-title-card {
+    border-radius: var(--radius-xl);
+    margin-bottom: 1.4rem;
+    padding: 1.2rem 1.3rem;
+    background: radial-gradient(circle at 0 0, rgba(129, 140, 248, 0.6), rgba(15, 23, 42, 0.98));
+    border: 1px solid rgba(129, 140, 248, 0.9);
+    box-shadow: 0 22px 70px rgba(30, 64, 175, 0.8);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    }
+
+    .featured-pill {
+    padding: 0.18rem 0.7rem 0.2rem;
+    border-radius: 999px;
+    border: 1px solid rgba(191, 219, 254, 0.9);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #dbeafe;
+    background: rgba(15, 23, 42, 0.9);
+    }
+
+    .featured-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+    }
+
+    .featured-title-text {
+    font-size: 1.02rem;
+    font-weight: 600;
+    }
+
+    .featured-sub {
+    font-size: 0.8rem;
+    color: #e5e7eb;
+    }
+
+    .featured-meta {
+    font-size: 0.75rem;
+    color: #c7d2fe;
+    margin-top: 0.15rem;
+    }
+
+    @media (max-width: 640px) {
+    .featured-title-card {
+        align-items: flex-start;
+    }
+    }
+
+    /* Featured logo strip */
+    .featured-logos {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.65rem;
+    opacity: 0.92;
+    }
+
+    .featured-logo {
+    height: 22px;
+    width: auto;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.55));
+    opacity: 0.9;
+    transition: opacity 180ms ease-out, transform 180ms ease-out;
+    }
+
+    .featured-logo:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    }
+
+    .title-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    margin-bottom: 0.4rem;
+    opacity: 0.9;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+    transition: transform 200ms ease-out, opacity 200ms ease-out;
+    }
+
+    .title-logo:hover {
+    transform: translateY(-3px);
+    opacity: 1;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="bg-orb bg-orb--purple"></div>
+  <div class="bg-orb bg-orb--cyan"></div>
+
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="nav-logo">PS</div>
+        <div class="nav-title">
+          <span>Prikshit Sehrawat</span>
+          <span>Game Programmer &amp; Software Engineer</span>
+        </div>
+      </div>
+
+      <nav>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+          <a href="#about" class="nav-link nav-link--active">About</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#experience" class="nav-link">Experience</a>
+          <a href="#titles" class="nav-link">Titles</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-intro reveal">
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            <span>Available for senior gameplay / tools roles</span>
+          </div>
+
+          <h1 class="hero-title">
+            Building smooth, expressive<br />
+            <span>gameplay &amp; systems</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Software Engineer / Game Programmer crafting responsive moment-to-moment gameplay, tools, and infrastructure
+            for live mobile titles. From Unity prototypes to data pipelines and CI—obsessed with polish,
+            performance, and player feel.
+            <span class="hero-highlight">
+              <span class="badge">Unity · C# · C++</span>
+              <span class="badge">Gameplay · Tools · Pipelines</span>
+            </span>
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">
+              View Selected Work ▸
+            </a>
+            <a href="#contact" class="btn btn-ghost">
+              Get in touch
+            </a>
+          </div>
+
+          <div class="hero-meta">
+            <div class="hero-meta-group">
+              <span class="hero-meta-label">Current</span>
+              <span class="hero-meta-value">Software Engineer @ EA (PvZ3)</span>
+            </div>
+            <div class="hero-meta-group">
+              <span class="hero-meta-label">Focus</span>
+              <span class="hero-meta-value">Gameplay systems, micro-games, tooling, CI</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="hero-card">
+            <div class="hero-card-inner">
+                <div>
+                    <div class="hero-avatar-wrap">
+                        <div class="hero-avatar-ring">
+                        <div class="hero-avatar">
+                            PS
+                            <!-- OR: <img src="your-avatar.png" alt="Prikshit avatar" /> -->
+                        </div>
+                        </div>
+                        <div class="hero-avatar-text">
+                        <div class="hero-avatar-text-main">Prikshit Sehrawat</div>
+                        <div class="hero-avatar-text-sub">Gameplay · Tools · Systems</div>
+                        </div>
+                    </div>
+
+                    <div class="hero-monitor">
+                        <div class="monitor-header">
+                        <div class="monitor-dots">
+                            <span class="monitor-dot"></span>
+                            <span class="monitor-dot"></span>
+                            <span class="monitor-dot"></span>
+                        </div>
+                        <span>WaterSorterController.cs</span>
+                        </div>
+                        <div class="monitor-body">
+                        <div class="code-line"><span class="code-comment">// (c) 2025 Electronic Arts Inc.</span></div>
+                        <div class="code-line"><span class="code-keyword">public class</span> <span class="code-type">WaterSorterController</span> : MonoBehaviour</div>
+                        <div class="code-line">{</div>
+                        <div class="code-line">&nbsp;&nbsp;<span class="code-keyword">[SerializeField]</span> <span class="code-type">List&lt;BeakerUnit&gt;</span> _beakers;</div>
+                        <div class="code-line">&nbsp;&nbsp;<span class="code-keyword">[SerializeField]</span> <span class="code-type">int</span> _maxMoves = <span class="code-meta">32</span>;</div>
+                        <div class="code-line">&nbsp;&nbsp;<span class="code-keyword">public</span> <span class="code-type">void</span> HandleMove(<span class="code-type">BeakerUnit</span> source, <span class="code-type">BeakerUnit</span> target)</div>
+                        <div class="code-line">&nbsp;&nbsp;{</div>
+                        <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (!CanPour(source, target)) <span class="code-keyword">return</span>;</div>
+                        <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;StartCoroutine(PourRoutine(source, target));</div>
+                        <div class="code-line">&nbsp;&nbsp;}</div>
+                        <div class="code-line">&nbsp;&nbsp;<span class="code-comment">// Responsive animation, undo, and bug-spray logic lives here.</span></div>
+                        <div class="code-line">}</div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="hero-stats">
+                    <div class="stat-pill">
+                        <span>Years in Games</span>
+                        <span>5+ yrs</span>
+                    </div>
+                    <div>
+                        <div class="stat-pill">
+                        <span>Shipped / Live titles</span>
+                        <span>PvZ3, Sims Mobile, NFS: No Limits+</span>
+                        </div>
+                        <div class="tech-tags">
+                        <span class="tech-tag">Unity</span>
+                        <span class="tech-tag">Unreal</span>
+                        <span class="tech-tag">C#</span>
+                        <span class="tech-tag">C++</span>
+                        <span class="tech-tag">Python</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="stat-pill">
+                        <span>Extra</span>
+                        <span>Tools, CI/CD, Protobuf data</span>
+                        </div>
+                        <div class="tech-tags">
+                        <span class="tech-tag">Jenkins</span>
+                        <span class="tech-tag">Firebase</span>
+                        <span class="tech-tag">Protobuf</span>
+                        <span class="tech-tag">Data-driven design</span>
+                        </div>
+                    </div>
+                    </div>        
+                <div>
+                  <div class="stat-pill">
+                    <span>Extra</span>
+                    <span>Tools, CI/CD, Protobuf data</span>
+                  </div>
+                  <div class="tech-tags">
+                    <span class="tech-tag">Jenkins</span>
+                    <span class="tech-tag">Firebase</span>
+                    <span class="tech-tag">Protobuf</span>
+                    <span class="tech-tag">Data-driven design</span>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- hero-card-inner -->
+          </div> <!-- hero-card -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-label">About</div>
+      <div class="section-heading">Who I am &amp; how I build <span>playable moments</span></div>
+
+      <div class="section-grid">
+        <div class="card reveal">
+          <div class="card-title">Game Programmer · Systems Designer · Toolsmith</div>
+          <div class="card-subtitle">Hyderabad, India · Open to remote / hybrid roles</div>
+          <div class="prose">
+            <p>
+              I’m a Game Programmer focused on building responsive, production-ready gameplay and tools.
+              At EA, I’ve contributed to <strong>PvZ3</strong> and other live mobile titles—designing micro-games,
+              gameplay systems, and pipelines that ship to millions of players.
+            </p>
+            <p>
+              I love taking a rough idea—“What if this mini-game felt like a satisfying lab experiment?”—and
+              turning it into a polished experience: responsive inputs, smart state machines, data-driven configs,
+              robust validation, and automated builds.
+            </p>
+          </div>
+          <div class="pill-row">
+            <span class="pill">Gameplay &amp; feel first</span>
+            <span class="pill">Clean, testable architecture</span>
+            <span class="pill">Design-friendly tools</span>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-title">What I enjoy working on</div>
+          <div class="prose">
+            <p>
+              • Crafting games and systems that are easy to iterate on.<br />
+              • Designing architecture for game systems.<br />
+              • Building tools and validators that keep content safe and designers fast.<br />
+              • Owning the full loop: from editor tooling and data pipelines to build and deployment.
+            </p>
+            <p>
+              Outside work, I explore prototypes: desktop companions, hyper-casual stacks, and puzzle mini-games,
+              experimenting with UX, low-scope loops, and monetization.
+            </p>
+          </div>
+          <div class="pill-row">
+            <span class="pill">Micro-games &amp; minigame factories</span>
+            <span class="pill">CI, build &amp; deployment</span>
+            <span class="pill">Data modelling (Protobuf / JSON)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-label">Skills</div>
+      <div class="section-heading">Technical stack &amp; <span>experience areas</span></div>
+
+      <div class="skills-grid reveal">
+        <div class="skills-card">
+          <div class="skills-title">Gameplay &amp; Engine</div>
+          <div class="skills-tags">
+            <span class="skills-tag">Unity (URP, mobile)</span>
+            <span class="skills-tag">Unreal (C++)</span>
+            <span class="skills-tag">C#</span>
+            <span class="skills-tag">C++</span>
+            <span class="skills-tag">Physics &amp; animation glue</span>
+          </div>
+        </div>
+        <div class="skills-card">
+          <div class="skills-title">Systems &amp; Architecture</div>
+          <div class="skills-tags">
+            <span class="skills-tag">State machines</span>
+            <span class="skills-tag">Event-driven systems</span>
+            <span class="skills-tag">Data-driven design</span>
+            <span class="skills-tag">ScriptableObjects</span>
+            <span class="skills-tag">Performance profiling</span>
+          </div>
+        </div>
+        <div class="skills-card">
+          <div class="skills-title">Tools, Data &amp; Infra</div>
+          <div class="skills-tags">
+            <span class="skills-tag">Protobuf</span>
+            <span class="skills-tag">Python tooling</span>
+            <span class="skills-tag">Jenkins CI/CD</span>
+            <span class="skills-tag">Firebase</span>
+            <span class="skills-tag">Build automation</span>
+          </div>
+        </div>
+        <div class="skills-card">
+          <div class="skills-title">Soft Skills</div>
+          <div class="skills-tags">
+            <span class="skills-tag">Cross-discipline communication</span>
+            <span class="skills-tag">Design collaboration</span>
+            <span class="skills-tag">Mentoring juniors</span>
+            <span class="skills-tag">Writing clear SDDs</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="section-label">Experience</div>
+      <div class="section-heading">Recent roles &amp; <span>impact</span></div>
+
+      <div class="section-grid">
+        <div class="card reveal">
+          <div class="card-title">Professional experience</div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-bullet"></div>
+              <div class="timeline-role">Software Engineer · Electronic Arts</div>
+              <div class="timeline-meta">Hyderabad · PvZ3, NFS: No Limits, The Sims Mobile, Bejeweled Stars</div>
+              <div class="timeline-body">
+                <ul>
+                  <li>Owned design &amp; implementation of multiple micro-games on PvZ3.</li>
+                  <li>Designed and wrote Tech Design Documents for the micro-games system end to end (client + server).</li>
+                  <li>Built data-driven systems with Protobuf, validators, and editor tooling.</li>
+                  <li>Improved Jenkins build stability and tooling around Firebase / RC.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-bullet"></div>
+              <div class="timeline-role">Software Engineer Intern · Electronic Arts</div>
+              <div class="timeline-meta">Plants vs Zombies arcade prototype</div>
+              <div class="timeline-body">
+                <ul>
+                  <li>Built &amp; designed a prototype for the Plants vs Zombies franchise along with a team of design &amp; art interns.</li>
+                  <li>Pitched it to leads from PopCap.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-title">Highlights</div>
+          <div class="prose">
+            <p>
+              • Reduced build friction by fixing CI scripts, surfacing better logs, and aligning tooling with
+              data pipelines.<br />
+              • Shipped micro-games and systems that respect live-ops constraints: safe rollouts, analytics hooks,
+              and content iteration for designers.<br />
+              • Acted as a bridge between gameplay code, tools, and content, making it easier for non-programmers to
+              build more of the game.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PUBLISHED TITLES -->
+    <section id="titles">
+      <div class="section-label">Published Titles</div>
+      <div class="section-heading">Games I’ve <span>shipped &amp; supported</span></div>
+        <div class="featured-title-card reveal">
+            <div class="featured-main">
+                <div class="featured-pill">Featured Title</div>
+                <div class="featured-title-text">Plants vs Zombies 3 · Electronic Arts</div>
+                <div class="featured-sub">
+                    Micro-game systems, gameplay architecture, and tools work powering lab-style puzzle experiences inside a live PvZ title.
+                </div>
+                <div class="featured-meta">
+                    Role: Software Engineer · Focus: Micro-games, data-driven systems, CI &amp; validation.
+                </div>
+
+                <!-- LOGO STRIP -->
+                <div class="featured-logos">
+                    <!-- EA Logo -->
+                    <img class="featured-logo" alt="EA Logo"
+                    src="assets/images/ea_logo.png" />
+
+                    <!-- PvZ Leaf Icon (simple, clean) -->
+                    <img class="featured-logo" alt="PvZ Leaf"
+                    src="assets/images/pvz_logo.png" />
+                </div>
+            </div>
+            
+        </div>
+
+      <div class="project-grid reveal">
+        <div class="project-card">
+            <img class="title-logo" src="assets/images/pvz_logo.png" alt="PvZ 3 Logo" />
+          <div class="project-title">Plants vs Zombies 3</div>
+          <div class="project-subtitle">Live mobile title · PvZ franchise</div>
+          <div class="project-body">
+            Contributed core micro-game systems and supporting tooling:
+            data-driven configs, validators, and tech design docs for client + server.
+            Ensured features were robust for live-ops, analytics, and iteration by designers.
+          </div>
+          <div class="project-footer">
+            <span class="project-tag">Unity</span>
+            <span class="project-tag">Micro-games</span>
+            <span class="project-tag">Systems Design</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+            <img class="title-logo" src="assets/images/nfs_logo.png" alt="NFSNL Logo" />
+          <div class="project-title">Need For Speed: No Limits</div>    
+          <div class="project-subtitle">Racing · Mobile · Live service</div>
+          <div class="project-body">
+            <p>
+              • Built the anti-cheat system for NFSNL from scratch.<br />
+              • Helped bump up ARPU by ~18% through systems and live-ops improvements.<br />
+              • Revamped the PvP experience with a focus on fairness and competitive feel.<br />
+            </p>
+          </div>
+          <div class="project-footer">
+            <span class="project-tag">Client Engineer</span>
+            <span class="project-tag">Custom C++ Framework</span>
+            <span class="project-tag">Live-ops</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+            <img class="title-logo" src="assets/images/sims_logo.png" alt="The Sims Mobile Logo" />
+          <div class="project-title">The Sims Mobile</div>
+          <div class="project-subtitle">Simulation · Mobile</div>
+          <div class="project-body">
+            <p>
+              • Built visual debug tools for in-game ads to unblock design &amp; UA teams.<br />
+              • Integrated in-game ad tech using Anzu's SDK in a custom C++ engine.<br />
+            </p>
+          </div>
+          <div class="project-footer">
+            <span class="project-tag">Client Engineer</span>
+            <span class="project-tag">Custom C++ Framework</span>
+            <span class="project-tag">Tools</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+            <img class="title-logo" src="assets/images/bejeweled_logo.png" alt="Bejeweled Stars Logo" />
+          <div class="project-title">Bejeweled Stars</div>
+          <div class="project-subtitle">Puzzle · Mobile</div>
+          <div class="project-body">
+            Contributed engineering support to live operations and feature work,
+            helping maintain stability and polish on a long-running puzzle title.
+          </div>
+          <div class="project-footer">
+            <span class="project-tag">Mobile</span>
+            <span class="project-tag">Live Support</span>
+            <span class="project-tag">Feature Engineering</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS (Prototypes, systems, tools) -->
+    <section id="projects">
+      <div class="section-label">Projects</div>
+      <div class="section-heading">Selected prototypes &amp; <span>systems work</span></div>
+
+      <div class="project-grid reveal">
+        <div class="project-card">
+          <div class="project-title">PvZ3 Micro-Game System</div>
+          <div class="project-subtitle">PvZ3 · Unity · Micro-game framework</div>
+          <div class="project-body">
+            Designed &amp; implemented the Water Sorter-style micro-game: selection, pouring, undo, bug-spray completion,
+            and responsive UI animation. Architected the logic to be fully data-driven, powered by Protobuf configs, validators, and editor tooling.
+          </div>
+          <div class="project-footer">
+            <span class="project-tag">Unity</span>
+            <span class="project-tag">C#</span>
+            <span class="project-tag">Data-driven</span>
+            <span class="project-tag">Mobile UX</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-title">Desktop Pet Companion</div>
+          <div class="project-subtitle">Side project · Windows first</div>
+          <div class="project-body">
+            “Bongo-cat-style” desktop companion that reacts to user activity, taskbar interactions,
+            and reminders—designed as a delightful productivity sidekick with a focus on polish and personality.
+          </div>
+          <div class="project-footer">
+            <span class="project-tag">Unity</span>
+            <span class="project-tag">2D Animation</span>
+            <span class="project-tag">Tools &amp; UX</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-title">Protobuf Schema Builder</div>
+          <div class="project-subtitle">Internal tooling</div>
+          <div class="project-body">
+            Python + Unity tooling that automates feature folder creation, schema &amp; JSON generation, DevManifest
+            updates, and codegen for C#/Java—reducing manual setup and errors for new micro-games and features.
+          </div>
+          <div class="project-footer">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">Protobuf</span>
+            <span class="project-tag">Tooling</span>
+            <span class="project-tag">Automation</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-title">Hyper-Casual Prototypes</div>
+          <div class="project-subtitle">Pet Tower, Idle Coffee Shop &amp; more</div>
+          <div class="project-body">
+            A set of small, polished loops exploring stacking, idle economies, and casual UX with an eye on
+            retention, minimal scope, and rapid iteration pipelines.
+          </div>
+          <div class="project-footer">
+            <span class="project-tag">Game Design</span>
+            <span class="project-tag">Unity</span>
+            <span class="project-tag">Rapid prototyping</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-label">Contact</div>
+      <div class="section-heading">Let’s build <span>something playable</span></div>
+
+      <div class="contact-grid">
+        <div class="card reveal">
+          <div class="card-title">Reach out</div>
+          <div class="contact-rows">
+            <div>
+              <div class="contact-row-label">Email</div>
+              <div class="contact-row-value">
+                <!-- Replace with your real email -->
+                <a href="mailto:prikshitsehrawat27@gmail.com">prikshitsehrawat27@gmail.com</a>
+              </div>
+            </div>
+            <div>
+              <div class="contact-row-label">Social</div>
+              <div class="social-row">
+                <!-- Replace hrefs with real links -->
+                <a href="https://www.linkedin.com/in/prikshit-sehrawat/" class="social-link">LinkedIn</a>            
+              </div>
+            </div>
+            <div>
+              <div class="contact-row-label">Currently</div>
+              <div class="contact-row-value">
+                Exploring Senior / Lead gameplay, tools, and systems roles in game teams that value polish and
+                collaboration.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-card reveal">
+          <h3>Quick note for hiring managers</h3>
+          <p>
+I bring a mix of gameplay engineering, tool development, and pipeline thinking: I design systems, implement them in-engine, and build the surrounding tools that make content iteration fast and safe. My work spans gameplay feel, data modelling, validation, and CI/CD, ensuring features are not only fun to play but easy to maintain and ship reliably. I also actively leverage Gen-AI as a productivity and quality amplifier—using it to prototype ideas faster, auto-generate boilerplate code, improve documentation, analyze stack traces, and streamline tooling workflows. This lets me deliver features end-to-end with higher speed, clarity, and consistency while keeping engineers, designers, and producers unblocked.
+
+If you’re looking for someone who combines strong engineering fundamentals with modern AI-assisted workflows to ship polished, maintainable gameplay systems—I’d love to talk.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> · Built in pure HTML/CSS/JS.</div>
+      <div>Designed for dark mode · Smooth, fancy &amp; tweakable.</div>
+    </footer>
+  </main>
+
+  <script>
+    // Dynamic year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById("navToggle");
+    const navLinks = document.getElementById("navLinks");
+    const navLinkEls = document.querySelectorAll(".nav-link");
+
+    navToggle.addEventListener("click", () => {
+      navToggle.classList.toggle("nav-toggle--open");
+      navLinks.classList.toggle("nav-links--open");
+    });
+
+    navLinkEls.forEach((link) => {
+      link.addEventListener("click", () => {
+        navToggle.classList.remove("nav-toggle--open");
+        navLinks.classList.remove("nav-links--open");
+      });
+    });
+
+    // Scroll spy + reveal
+    const sections = document.querySelectorAll("section[id]");
+    const options = { root: null, threshold: 0.35 };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.getAttribute("id");
+        const navItem = document.querySelector('.nav-link[href="#' + id + '"]');
+
+        if (entry.isIntersecting) {
+          navLinkEls.forEach((link) => link.classList.remove("nav-link--active"));
+          if (navItem) navItem.classList.add("nav-link--active");
+        }
+      });
+    }, options);
+
+    sections.forEach((section) => observer.observe(section));
+
+    // Simple reveal animation
+    const revealEls = document.querySelectorAll(".reveal");
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal--visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18 }
+    );
+
+    revealEls.forEach((el) => revealObserver.observe(el));
+
+    // Hero card tilt on mouse move (desktop only)
+    const heroCard = document.querySelector(".hero-card");
+    if (heroCard && window.matchMedia("(pointer: fine)").matches) {
+    const maxTilt = 10; // degrees
+
+    heroCard.addEventListener("mousemove", (e) => {
+        const rect = heroCard.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;  // 0..1
+        const y = (e.clientY - rect.top) / rect.height;   // 0..1
+
+        const rotateY = (x - 0.5) * maxTilt * 2;
+        const rotateX = (0.5 - y) * maxTilt * 2;
+
+        heroCard.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    });
+
+    heroCard.addEventListener("mouseleave", () => {
+        heroCard.style.transform = "perspective(900px) translateY(0)";
+    });
+    }
+
+  </script>
+</body>
+</html>
